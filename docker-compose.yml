@@ -1,0 +1,66 @@
+services:
+  # Frontend Service (React + Nginx)
+  frontend:
+    build:
+      context: ./cloudgen-ai
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80" # Map host port 5173 to container port 80
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Backend Service (FastAPI)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Map host port 8000 to container port 8000
+    environment:
+      # These environment variables will be used by your Python code
+      REDIS_HOST: redis
+      OLLAMA_HOST: http://ollama:11434
+    volumes:
+      # Mount a volume for Ollama models to persist them across restarts
+      - ollama_data:/root/.ollama
+    depends_on:
+      redis:
+        condition: service_started
+      ollama:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # Redis Service
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  # Ollama Service for running LLMs
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Define the network for services to communicate
+networks:
+  app-network:
+    driver: bridge
+
+# Define named volumes for persistent data
+volumes:
+  ollama_data:

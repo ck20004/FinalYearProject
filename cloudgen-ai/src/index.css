@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================
+   ✅ Custom Tailwind Components
+   ============================= */
+
+/* ✏️ Input Field */
+.input {
+  @apply w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2;
+}
+
+.input-blue {
+  @apply input focus:ring-blue-400;
+}
+
+.input-green {
+  @apply input focus:ring-green-400;
+}
+
+/* ✅ Buttons */
+.btn-blue {
+  @apply w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300;
+}
+
+.btn-green {
+  @apply w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300;
+}
+
+/* 📦 Card Container */
+.card {
+  @apply bg-white p-8 rounded-lg shadow-lg w-full max-w-md;
+}
+
+/* 🏷️ Section Title */
+.title-blue {
+  @apply text-2xl font-bold text-center mb-6 text-blue-600;
+}
+
+.title-green {
+  @apply text-2xl font-bold text-center mb-6 text-green-600;
+}
+
+/* 🖥️ Dashboard Wrapper */
+.dashboard-layout {
+  @apply flex min-h-screen;
+}
+
+.sidebar {
+  @apply w-64 bg-gray-800 text-white p-4 space-y-4;
+}
+
+.main-content {
+  @apply flex-1 p-6 bg-gray-100;
+}

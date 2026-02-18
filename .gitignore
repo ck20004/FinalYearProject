@@ -1,0 +1,14 @@
+node_modules/
+.env
+venv
+__pycache__
+*test*
+debug*
+development_plan.txt
+aws.py
+.vscode
+.vite
+download*
+EM_Model
+env.txt
+setup.txt
